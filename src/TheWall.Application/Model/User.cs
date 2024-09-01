@@ -9,5 +9,6 @@ namespace TheWall.Application.Model
 {
     public class User : IdentityUser
     {
+        public string? Name { get; set; }
     }
 }
