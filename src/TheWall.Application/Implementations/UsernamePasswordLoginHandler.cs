@@ -6,7 +6,7 @@ namespace TheWall.Application.Implementations;
 
 internal class UsernamePasswordLoginHandler(UserManager<User> userManager) : ILoginHandler<UsernamePasswordLoginModel>
 {
-    public async Task<User> LoginAsync(UsernamePasswordLoginModel request, CancellationToken cancellationToken)
+    public async Task<LoginUserResult> LoginAsync(UsernamePasswordLoginModel request, CancellationToken cancellationToken)
     {
         var user = await userManager.FindByEmailAsync(request.Username);
         if (user == null)
@@ -19,7 +19,13 @@ internal class UsernamePasswordLoginHandler(UserManager<User> userManager) : ILo
             throw new ApplicationException("User not found");
         }
 
-        return user;
+        return new LoginUserResult()
+        {
+            Email = user.Email ?? string.Empty,
+            Id = user.Id,
+            Name = user.Name ?? string.Empty,
+            Roles = (await userManager.GetRolesAsync(user)).ToArray()
+        };
 
     }
 }

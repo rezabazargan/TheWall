@@ -9,6 +9,6 @@ namespace TheWall.Application.Contracts
 {
     internal interface ITokenProvider
     {
-        Task<string> GetToken(User user, CancellationToken cancellationToken);
+        Task<string> GetToken(LoginUserResult user, CancellationToken cancellationToken);
     }
 }

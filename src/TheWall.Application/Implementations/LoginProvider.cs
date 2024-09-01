@@ -9,7 +9,7 @@ internal class LoginProvider(IServiceProvider serviceProvider, ITokenProvider to
 
     public async Task<LoginResult> LoginAsync(LoginModelBase request, CancellationToken cancellationToken)
     {
-        User? user = null;
+        LoginUserResult? user = null;
         if (request is UsernamePasswordLoginModel model)
         {
             var handler = serviceProvider

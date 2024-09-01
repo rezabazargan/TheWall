@@ -4,5 +4,5 @@ namespace TheWall.Application.Contracts;
 
 public interface ILoginHandler<T> where T: LoginModelBase
 {
-    Task<User> LoginAsync(T request, CancellationToken cancellationToken);
+    Task<LoginUserResult> LoginAsync(T request, CancellationToken cancellationToken);
 }
