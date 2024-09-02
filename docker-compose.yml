@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "p@SSword123"
+    ports:
+      - "9012:1433"
+    networks:
+      - mynetwork
+    volumes:
+      - sql_data:/var/opt/mssql
+
+  thewall:
+    image: thewall:latest
+    container_name: thewall
+    environment:
+      ConnectionStrings__IdentitySQl: "Data Source=sqlserver,1433;Initial Catalog=Identity;User ID=sa;Password=p@SSword123;TrustServerCertificate=True"
+    ports:
+      - "5050:8080"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  sql_data:
+    driver: local
