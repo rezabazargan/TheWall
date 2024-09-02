@@ -17,6 +17,7 @@ services:
   thewall:
     image: thewall:latest
     container_name: thewall
+    hostname: thewall
     environment:
       ConnectionStrings__IdentitySQl: "Data Source=sqlserver,1433;Initial Catalog=Identity;User ID=sa;Password=p@SSword123;TrustServerCertificate=True"
     ports:
@@ -24,6 +25,20 @@ services:
     networks:
       - mynetwork
 
+  gateway:
+    image: gateway:latest
+    container_name: gateway
+    hostname: gateway
+    ports:
+      - "8000:5000"
+    networks:
+      - mynetwork
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production 
+    links:
+      - thewall
+    depends_on:
+      - thewall
 networks:
   mynetwork:
     driver: bridge
