@@ -17,6 +17,8 @@ namespace TheWall.Application
             services.AddScoped<ILoginHandler<UsernamePasswordLoginModel>, UsernamePasswordLoginHandler>();
             services.AddSingleton<ITokenProvider, JwtTokenProvider>();
 
+            services.AddScoped<IRegisterHandler, RegisterHandler>();
+
             return services;
         }
     }
